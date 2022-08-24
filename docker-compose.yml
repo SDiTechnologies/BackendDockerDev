@@ -39,36 +39,36 @@ services:
   #     PGADMIN_DEFAULT_PASSWORD: SuperSecure1!
   #     PGADMIN_LISTEN_PORT: 80
 
-  # SECTION: MYSQL
-  mysqldb:
-    image: mysql:latest
-    container_name: mysql
-    restart: always
-    # network_mode: host
-    volumes:
-      - ./data/mysql/data:/var/lib/mysql
-    command: --default-authentication-plugin=mysql_native_password
-    ports:
-      - 3306:3306
-    environment:
-      MYSQL_ROOT_PASSWORD: SuperSecure1!
-      MYSQL_USER: MYSQLAdmin
-      MYSQL_PASSWORD: SuperSecure2!
-      MYSQL_DATABASE: DevDB
-
-  # # SECTION: MICROSOFT
-  # mssqldb:
-  #   image: mcr.microsoft.com/mssql/server
-  #   container_name: mssqlserver
+  # # SECTION: MYSQL
+  # mysqldb:
+  #   image: mysql:latest
+  #   container_name: mysql
   #   restart: always
+  #   # network_mode: host
   #   volumes:
-  #     - ./data/mssql/data:/var/opt/mssql
+  #     - ./data/mysql/data:/var/lib/mysql
+  #   command: --default-authentication-plugin=mysql_native_password
   #   ports:
-  #     - 1433:1433
+  #     - 3306:3306
   #   environment:
-  #     ACCEPT_EULA: Y
-  #     SA_PASSWORD: SuperSecure1!
-  #     MSSQL_PID: Developer
+  #     MYSQL_ROOT_PASSWORD: SuperSecure1!
+  #     MYSQL_USER: MYSQLAdmin
+  #     MYSQL_PASSWORD: SuperSecure2!
+  #     MYSQL_DATABASE: DevDB
+
+  # SECTION: MICROSOFT
+  mssqldb:
+    image: mcr.microsoft.com/mssql/server:latest
+    container_name: mssqlserver
+    restart: always
+    volumes:
+      - ./data/mssql/data:/var/opt/mssql
+    ports:
+      - 1433:1433
+    environment:
+      ACCEPT_EULA: Y
+      SA_PASSWORD: SuperSecure1!
+      MSSQL_PID: Developer
 
   # # mssql w/ Python and R
   # mssqlml-db:
