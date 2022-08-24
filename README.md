@@ -9,4 +9,16 @@ What's affected? So far, .gitkeep files may require removal and the pgadmin admi
 
 Correction:
 >$ chown -R 5050:5050 ./pgsql/pgadmin
+
+For more information concerning 
+
+
+
+- pgadmin4 containers: https://www.pgadmin.org/docs/pgadmin4/latest/container_deployment.html
+
+- mysql containers: https://hub.docker.com/_/mysql/
+
+- mssql containers:
+
+
 -->

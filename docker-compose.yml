@@ -1,72 +1,73 @@
 version: "3"
 services:  
 
-  # postgres-alpine
-  pgdb:
-    image: postgres:alpine
-    container_name: postgresql
-    restart: always
-    # network_mode: host
-    volumes:
-      - ./data/pgsql/data:/var/lib/postgresql/data
-      - ./data/pgsql/tables:/docker-entrypoint-initdb.d/
-    ports:
-      - 5432:5432
-    # expose:
-    #   - "5432"
-    environment:
-      POSTGRES_DB: DevDB
-      POSTGRES_USER: PGAdminUser
-      POSTGRES_PASSWORD: SuperSecure1!
-
-
-  # postgres-admin gui web interface:
-  pgweb:
-    image: dpage/pgadmin4
-    container_name: pgweb
-    restart: always
-    # network_mode: host
-    depends_on:
-      - pgdb
-    volumes:
-      - ./data/pgsql/pgadmin:/var/lib/pgadmin
-    ports:
-      - 80:80
-    # expose:
-    #   - "80"
-    environment:
-      PGADMIN_DEFAULT_EMAIL: dev@example.com
-      PGADMIN_DEFAULT_PASSWORD: SuperSecure1!
-      PGADMIN_LISTEN_PORT: 80
-
-  # # mysql
-  # mysql-db:
-  #   image: mysql:latest
-  #   container_name: mysql_db
+  ## SECTION: POSTGRES
+  # # postgres-alpine
+  # pgdb:
+  #   image: postgres:alpine
+  #   container_name: postgresql
   #   restart: always
+  #   # network_mode: host
   #   volumes:
-  #     - mysql-data:/var/lib/mysql
-  #   command: --default-authentication-plugin=mysql_native_password
+  #     - ./data/pgsql/data:/var/lib/postgresql/data
+  #     - ./data/pgsql/tables:/docker-entrypoint-initdb.d/
   #   ports:
-  #     - "3306:3306"
+  #     - 5432:5432
+  #   # expose:
+  #   #   - "5432"
   #   environment:
-  #     MYSQL_ROOT_PASSWORD: Supersecureroot1!
-  #     MYSQL_USER: MYSQLAdminUserName
-  #     MYSQL_PASSWORD: Supersecureuser2!
-  #     MYSQL_DATABASE: DevDB
+  #     POSTGRES_DB: DevDB
+  #     POSTGRES_USER: PGAdmin
+  #     POSTGRES_PASSWORD: SuperSecure1!
 
-  # # mssql
-  # mssql-db:
+  # # postgres-admin gui web interface:
+  # pgweb:
+  #   image: dpage/pgadmin4
+  #   container_name: pgweb
+  #   restart: always
+  #   # network_mode: host
+  #   depends_on:
+  #     - pgdb
+  #   volumes:
+  #     - ./data/pgsql/pgadmin:/var/lib/pgadmin
+  #   ports:
+  #     - 80:80
+  #   # expose:
+  #   #   - "80"
+  #   environment:
+  #     PGADMIN_DEFAULT_EMAIL: dev@example.com
+  #     PGADMIN_DEFAULT_PASSWORD: SuperSecure1!
+  #     PGADMIN_LISTEN_PORT: 80
+
+  # SECTION: MYSQL
+  mysqldb:
+    image: mysql:latest
+    container_name: mysql
+    restart: always
+    # network_mode: host
+    volumes:
+      - ./data/mysql/data:/var/lib/mysql
+    command: --default-authentication-plugin=mysql_native_password
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: SuperSecure1!
+      MYSQL_USER: MYSQLAdmin
+      MYSQL_PASSWORD: SuperSecure2!
+      MYSQL_DATABASE: DevDB
+
+  # # SECTION: MICROSOFT
+  # mssqldb:
   #   image: mcr.microsoft.com/mssql/server
-  #   container_name: mssql-server
+  #   container_name: mssqlserver
   #   restart: always
   #   volumes:
-  #     - mssql-data:/var/opt/mssql
+  #     - ./data/mssql/data:/var/opt/mssql
   #   ports:
-  #     - "1433:1433"
+  #     - 1433:1433
   #   environment:
   #     ACCEPT_EULA: Y
-  #     SA_PASSWORD: Supersecureroot1!
+  #     SA_PASSWORD: SuperSecure1!
   #     MSSQL_PID: Developer
 
   # # mssql w/ Python and R
@@ -85,7 +86,7 @@ services:
   #     SA_PASSWORD: Supersecureroot1!
   #     MSSQL_PID: Developer
 
-  # # redis
+  # # SECTION: OTHER
   # redis:
   #   image: redis:alpine
   #   container_name: redis
