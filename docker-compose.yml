@@ -58,7 +58,7 @@ services:
 
   # SECTION: MICROSOFT
   mssqldb:
-    image: mcr.microsoft.com/mssql/server:latest
+    image: mcr.microsoft.com/mssql/server:2017-latest
     container_name: mssqlserver
     restart: always
     volumes:
