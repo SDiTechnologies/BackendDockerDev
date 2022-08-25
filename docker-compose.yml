@@ -20,7 +20,7 @@ services:
   #     POSTGRES_USER: PGAdmin
   #     POSTGRES_PASSWORD: SuperSecure1!
 
-  # # postgres-admin gui web interface:
+  # # SECTION: POSTGRES ADMIN WEB GUI 
   # pgweb:
   #   image: dpage/pgadmin4
   #   container_name: pgweb
@@ -56,35 +56,39 @@ services:
   #     MYSQL_PASSWORD: SuperSecure2!
   #     MYSQL_DATABASE: DevDB
 
-  # SECTION: MICROSOFT
-  mssqldb:
-    image: mcr.microsoft.com/mssql/server:2017-latest
-    container_name: mssqlserver
+  # # SECTION: MICROSOFT SQL SERVER
+  # mssqldb:
+  #   image: mcr.microsoft.com/mssql/server:2017-latest
+  #   container_name: mssqlserver
+  #   restart: always
+  #     # network_mode: host
+  #   volumes:
+  #     - ./data/mssql/data:/var/opt/mssql
+  #   ports:
+  #     - 1433:1433
+  #   environment:
+  #     ACCEPT_EULA: Y
+  #     SA_PASSWORD: SuperSecure1!
+  #     MSSQL_PID: Developer
+
+  # SECTION: MICROSOFT SQL SERVER MLSERVICES
+  mssqlml-db:
+    image: mssql-server-mlservices
+    build:
+      context: ./dockerfiles/mssql-mlservices
+      dockerfile: Dockerfile.mssqlml
+    container_name: mssql-ml-server
     restart: always
+    # network_mode: host
     volumes:
       - ./data/mssql/data:/var/opt/mssql
     ports:
       - 1433:1433
     environment:
       ACCEPT_EULA: Y
+      ACCEPT_EULA_ML: Y
       SA_PASSWORD: SuperSecure1!
       MSSQL_PID: Developer
-
-  # # mssql w/ Python and R
-  # mssqlml-db:
-  #   image: mssql-ml-server
-  #   build:
-  #     context: ./mssql-mlservices
-  #     dockerfile: Dockerfile
-  #   container_name: mssql-ml-server
-  #   restart: always
-  #   volumes:
-  #     - mssqlml-data:/var/opt/mssql
-  #   environment:
-  #     ACCEPT_EULA: Y
-  #     ACCEPT_EULA_ML: Y
-  #     SA_PASSWORD: Supersecureroot1!
-  #     MSSQL_PID: Developer
 
   # # SECTION: OTHER
   # redis:
@@ -94,15 +98,7 @@ services:
   #   ports:
   #     - "6379:6379"
 
-  # # memcached; TODO
   # memcached:
   #   image: memcached:alpine
   #   container_name: memcached
   #   restart: always
-
-
-# volumes:
-#   pg-data:
-#   mysql-data:
-#   mssql-data:
-#   mssqlml-data:

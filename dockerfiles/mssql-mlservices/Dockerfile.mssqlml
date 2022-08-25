@@ -1,9 +1,3 @@
-# https://github.com/MicrosoftDocs/sql-docs/blob/live/docs/linux/sql-server-linux-setup-machine-learning-docker.md
-
-# git clone https://github.com/microsoft/mssql-docker mssql-docker
-# cd /mssql-docker/linux/preview/examples/mssql-mlservices
-# docker build -t mssql-server-mlservices .
-
 # Maintainers: Microsoft Corporation 
 FROM ubuntu:18.04
 
